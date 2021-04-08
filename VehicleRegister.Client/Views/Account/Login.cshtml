@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+<style type="text/css">
+
+    #input 
+    {
+        text-align:left;
+        width: 210px;
+        margin: 0 auto;
+    }
+    #div
+    {
+        text-align:center
+    }
+    </style>
+
+
+<div class="jumbotron">
+    <h1 style="text-align: center">Login</h1>
+</div>
+
+<div id="div" class="row;.form">
+    <form action="Login" method="post">
+        <div>
+            <label id="input" for="username">Username:</label>
+        </div>
+        <div>
+            <input id="input" style="margin-bottom: 5px" type="text" name="username" required minlenght="4" maxlength="20" size="22">
+        </div>
+
+        <div>
+            <label id="input" for="password">Password:</label>
+        </div>
+        <div>
+            <input id="input" style="margin-bottom: 5px" type="password" name="password" required minlenght="8" maxlength="20" size="22">
+        </div>
+        <input style="margin-top: 10px;width:150px" type="submit" value="Login">
+    </form>
+</div>

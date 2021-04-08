@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Create Account";
+}
+
+<style type="text/css">
+
+    #input {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+    }
+
+    #div {
+        text-align: center
+    }
+</style>
+
+<div class="jumbotron">
+    <h1 style="text-align:center">Create Account</h1>
+    <p style="text-align:center">@ViewBag.Message</pstyle="text-align:center">
+</div>
+
+<div id="div" class="row">
+    <form action="CreateAccount" method="post">
+        <div>
+            <label id="input" for="username">Username:</label>
+        </div>
+        <div>
+            <input id="input" style="margin-bottom: 5px" type="text" name="username" required minlenght="4" maxlength="20" size="22">
+        </div>
+
+        <div>
+            <label id="input" for="authorization">Authorization:</label>
+        </div>
+        <div>
+            <select name="authorization" id="input">
+                <option value="Admin"> Admin</option>
+                <option value="Super Admin"> Super Admin</option>
+            </select>
+        </div>
+
+        <div>
+            <label id="input" for="password">Password:</label>
+        </div>
+        <div>
+            <input id="input" style="margin-bottom: 5px" type="password" name="password" required minlenght="8" maxlength="20" size="22">
+        </div>
+        <div>
+            <label id="input" for="confirmPassword">Confirm Password:</label>
+        </div>
+        <div>
+            <input id="input" style="margin-bottom: 5px" type="password" name="confirmPassword" required minlenght="8" maxlength="20" size="22">
+        </div>
+        <input style="margin-top: 10px;width:150px" type="submit" value="Create Account">
+    </form>
+</div>

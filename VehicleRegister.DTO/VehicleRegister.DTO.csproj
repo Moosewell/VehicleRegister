@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dto\AccountRequestDto.cs" />
     <Compile Include="dto\ServiceRequestDto.cs" />
     <Compile Include="dto\VehicleRequestDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

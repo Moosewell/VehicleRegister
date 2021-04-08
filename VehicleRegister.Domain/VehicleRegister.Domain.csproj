@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Account.cs" />
     <Compile Include="Classes\Vehicles\HeavyVehicle.cs" />
     <Compile Include="Classes\Vehicles\Vehicle.cs" />
     <Compile Include="Classes\Vehicles\MediumSizedPassengerCar.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Classes\Vehicles\LightPassengerCar.cs" />
     <Compile Include="Classes\VehicleFactory.cs" />
     <Compile Include="Classes\VehicleService.cs" />
+    <Compile Include="Interfaces\IAccount.cs" />
     <Compile Include="Interfaces\IVehicle.cs" />
     <Compile Include="Interfaces\IVehicleService.cs" />
     <Compile Include="Interfaces\IService.cs" />

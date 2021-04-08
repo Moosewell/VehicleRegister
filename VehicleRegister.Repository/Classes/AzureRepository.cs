@@ -9,7 +9,7 @@ using VehicleRegister.Repository.Interfaces;
 
 namespace VehicleRegister.Repository.Classes
 {
-    public class AzureRepository : IVehicleRepository
+    public class AzureRepository : IVehicleRepository, IAccountRepository
     {
         private readonly AzureDataContext dataContext;
 
@@ -21,6 +21,9 @@ namespace VehicleRegister.Repository.Classes
         public void DeleteVehicle(string registrationNumber)
         {
             var dataBaseVehicle = dataContext.Vehicles.Where(o => o.RegistrationNumber == registrationNumber).FirstOrDefault();
+            if (dataBaseVehicle == null)
+                throw new Exception("No vehicle found in database");
+
             dataContext.Vehicles.DeleteOnSubmit(dataBaseVehicle);
 
             var databaseVehicleServiceList = dataContext.VehicleServices.Where(o => o.RegistrationNumber == registrationNumber);
@@ -32,7 +35,7 @@ namespace VehicleRegister.Repository.Classes
             var serviceIdList = databaseVehicleServiceList.Select(o => o.ServiceId);
             foreach (var id in serviceIdList)
             {
-                var service = dataContext.Services.Where(o => o.Id == id).FirstOrDefault();
+                var service = dataContext.Services.Where(o => o.Id == id).Single();
                 dataContext.Services.DeleteOnSubmit(service);
             }
 
@@ -55,6 +58,8 @@ namespace VehicleRegister.Repository.Classes
         {
             VehicleFactory factory = new VehicleFactory();
             var dataBaseVehicle = dataContext.Vehicles.Where(o => o.RegistrationNumber == registrationNumber).FirstOrDefault();
+            if (dataBaseVehicle == null)
+                throw new Exception("No vehicle found in database");
 
             var databaseVehicleServiceList = dataContext.VehicleServices.Where(o => o.RegistrationNumber == registrationNumber);
             var serviceIdList = databaseVehicleServiceList.Select(o => o.ServiceId);
@@ -62,7 +67,7 @@ namespace VehicleRegister.Repository.Classes
             IService bookedService = null;
             foreach (var id in serviceIdList)
             {
-                var databaseService = dataContext.Services.Where(o => o.Id == id).FirstOrDefault();
+                var databaseService = dataContext.Services.Where(o => o.Id == id).Single();
                 if (databaseService.Completed == false)
                 {
                     bookedService = factory.CreateService(databaseService.Date, databaseService.Description);
@@ -130,15 +135,15 @@ namespace VehicleRegister.Repository.Classes
 
         public void UpdateVehicle(IVehicle vehicle)
         {
-            var currentVehicle = dataContext.Vehicles.Where(o => o.RegistrationNumber == vehicle.RegistrationNumber).FirstOrDefault();
-            if (currentVehicle == null)
+            var databaseVehicle = dataContext.Vehicles.Where(o => o.RegistrationNumber == vehicle.RegistrationNumber).FirstOrDefault();
+            if (databaseVehicle == null)
                 throw new Exception("No vehicle found in database");
 
-            currentVehicle.Model = vehicle.Model;
-            currentVehicle.Brand = vehicle.Brand;
-            currentVehicle.Weight = vehicle.Weight;
-            currentVehicle.FirstTimeInTraffic = vehicle.FirstTimeInTraffic;
-            currentVehicle.IsRegistered = vehicle.IsRegistered;
+            databaseVehicle.Model = vehicle.Model;
+            databaseVehicle.Brand = vehicle.Brand;
+            databaseVehicle.Weight = vehicle.Weight;
+            databaseVehicle.FirstTimeInTraffic = vehicle.FirstTimeInTraffic;
+            databaseVehicle.IsRegistered = vehicle.IsRegistered;
         }
 
         public void BookService(IVehicle vehicle)
@@ -152,10 +157,35 @@ namespace VehicleRegister.Repository.Classes
             var serviceIdList = databaseVehicleServiceList.Select(o => o.ServiceId);
             foreach(var id in serviceIdList)
             {
-                var service = dataContext.Services.Where(o => o.Id == id).FirstOrDefault();
+                var service = dataContext.Services.Where(o => o.Id == id).Single();
                 if (service.Completed == false)
                     service.Completed = true;
             }
+        }
+
+        public void RegisterAccount(IAccount account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<IAccount> GetAllAccounts()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IAccount GetAccount(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateAccount(IAccount account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAccount(string username)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -35,6 +35,7 @@ namespace VehicleRegister.API
 
             container.Register<IVehicleService, VehicleService>(Lifestyle.Scoped);
             container.Register<IVehicleRepository, AzureRepository>(Lifestyle.Scoped);
+            container.Register<IAccountRepository, AzureRepository>(Lifestyle.Scoped);
 
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
 
