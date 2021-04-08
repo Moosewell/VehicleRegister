@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VehicleRegister.DTO.dto
 {
-    public class ServiceRequest
+    public class ServiceRequestDto
     {
         public string registrationNumber { get; set; }
         public DateTime Date { get; set; }

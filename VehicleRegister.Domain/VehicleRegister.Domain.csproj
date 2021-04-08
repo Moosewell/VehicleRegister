@@ -41,14 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Vehicles\HeavyVehicle.cs" />
+    <Compile Include="Classes\Vehicles\Vehicle.cs" />
+    <Compile Include="Classes\Vehicles\MediumSizedPassengerCar.cs" />
+    <Compile Include="Classes\Service.cs" />
+    <Compile Include="Classes\Vehicles\LightPassengerCar.cs" />
+    <Compile Include="Classes\VehicleFactory.cs" />
+    <Compile Include="Classes\VehicleService.cs" />
     <Compile Include="Interfaces\IVehicle.cs" />
     <Compile Include="Interfaces\IVehicleService.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Classes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\VehicleRegister.DTO\VehicleRegister.DTO.csproj">
       <Project>{8c2d53c2-5d09-418b-a51e-4d74f2eaecff}</Project>

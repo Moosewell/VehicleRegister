@@ -10,12 +10,18 @@ namespace VehicleRegister.Domain.Interfaces
     {
         string RegistrationNumber { get; }
         string Model { get; }
-        string VehicleType { get; }
+        string Brand { get; }
         double Weight { get; }
         DateTime FirstTimeInTraffic { get; }
         bool IsRegistered { get; }
         IService BookedService { get; }
-        List<IService> ServiceHistory { get; }
+        IList<IService> ServiceHistory { get; }
         double YearlyFee { get; }
+
+        void Register();
+        void Unregister();
+        void BookNewService(IService service);
+        void CompleteService();
+
     }
 }
