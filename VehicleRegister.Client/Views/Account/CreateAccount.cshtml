@@ -10,6 +10,18 @@
         margin: 0 auto;
     }
 
+    #password {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+    }
+
+    #confirmpassword {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+    }
+
     #div {
         text-align: center
     }
@@ -17,7 +29,7 @@
 
 <div class="jumbotron">
     <h1 style="text-align:center">Create Account</h1>
-    <p style="text-align:center">@ViewBag.Message</pstyle="text-align:center">
+    <p style="text-align:center">@ViewBag.Message</p>
 </div>
 
 <div id="div" class="row">
@@ -43,13 +55,24 @@
             <label id="input" for="password">Password:</label>
         </div>
         <div>
-            <input id="input" style="margin-bottom: 5px" type="password" name="password" required minlenght="8" maxlength="20" size="22">
+            <input id="password" style="margin-bottom: 5px" type="password" name="password" required minlenght="8" maxlength="20" size="22">
         </div>
         <div>
             <label id="input" for="confirmPassword">Confirm Password:</label>
         </div>
         <div>
-            <input id="input" style="margin-bottom: 5px" type="password" name="confirmPassword" required minlenght="8" maxlength="20" size="22">
+            <input id="confirmpassword" style="margin-bottom: 5px" type="password" name="confirmPassword" required minlenght="8" maxlength="20" size="22" oninput="check(this)">
+            
+            <script language='javascript' type='text/javascript'>
+                function check(input) {
+                    if (input.value != document.getElementById('password').value) {
+                        input.setCustomValidity('Password Must be Matching.');
+                    }
+                    else {
+                        input.setCustomValidity('');
+                    }
+                }
+            </script>
         </div>
         <input style="margin-top: 10px;width:150px" type="submit" value="Create Account">
     </form>

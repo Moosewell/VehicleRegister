@@ -124,6 +124,12 @@ namespace VehicleRegister.Repository.Classes
 
         public void RegisterVehicle(IVehicle vehicle)
         {
+            foreach (var entity in dataContext.Vehicles)
+            {
+                if (entity.RegistrationNumber == vehicle.RegistrationNumber)
+                    throw new Exception($"Car with registration number: {vehicle.RegistrationNumber} already exists in database");
+            }
+
             var registrationNumber = AddVehicle(vehicle);
 
             if (vehicle.BookedService != null)
@@ -165,17 +171,44 @@ namespace VehicleRegister.Repository.Classes
 
         public void RegisterAccount(IAccount account)
         {
-            throw new NotImplementedException();
+            foreach(var entity in dataContext.Accounts)
+            {
+                if (entity.Username == account.Username)
+                    throw new Exception("Username already in use");
+            }
+            var newAccount = new Account
+            {
+                Username = account.Username,
+                Authorization = account.Authorization,
+                Password = account.Password
+            };
+
+            dataContext.Accounts.InsertOnSubmit(newAccount);
+            dataContext.SubmitChanges();
+
         }
 
         public List<IAccount> GetAllAccounts()
         {
-            throw new NotImplementedException();
+            List<IAccount> accountList = new List<IAccount>();
+            foreach(var entity in dataContext.Accounts)
+            {
+                accountList.Add(GetAccount(entity.Username));
+            }
+
+            return accountList;
         }
 
         public IAccount GetAccount(string username)
         {
-            throw new NotImplementedException();
+            var databaseAccount = dataContext.Accounts.Where(o => o.Username == username).FirstOrDefault();
+            if (databaseAccount == null)
+                throw new Exception("Account not found in database");
+
+            IAccount account = new Domain.Classes.Account(databaseAccount.Username, 
+                                                          databaseAccount.Authorization, 
+                                                          databaseAccount.Password);
+            return account;
         }
 
         public void UpdateAccount(IAccount account)
