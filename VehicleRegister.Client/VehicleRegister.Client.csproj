@@ -126,6 +126,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\AccountModel.cs" />
+    <Compile Include="Models\Account\LoginModel.cs" />
+    <Compile Include="Models\Account\UserIdentity.cs" />
+    <Compile Include="Models\EndPoints.cs" />
+    <Compile Include="Models\VehicleRegister\ServiceModel.cs" />
+    <Compile Include="Models\VehicleRegister\VehicleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,10 +168,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\CreateAccount.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\VehicleRegister\Home.cshtml" />
+    <Content Include="Views\VehicleRegister\GetVehicleList.cshtml" />
+    <Content Include="Views\VehicleRegister\RegisterVehicle.cshtml" />
+    <Content Include="Views\VehicleRegister\GetVehicle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\VehicleRegister\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

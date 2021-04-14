@@ -9,7 +9,6 @@ namespace VehicleRegister.Domain.Classes.Vehicles
 {
     public abstract class Vehicle : IVehicle
     {
-        
 
         private string registrationNumber { get; set; }
         private string model { get; set; }

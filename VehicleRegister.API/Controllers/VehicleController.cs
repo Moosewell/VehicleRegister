@@ -29,10 +29,12 @@ namespace VehicleRegister.API.Controllers
             foreach (var service in vehicleRequestDto.ServiceHistory)
                 vehicleServices.Add(factory.CreateService(service.Date, service.Description));
 
-            IService bookedService = factory.CreateService(vehicleRequestDto.BookedService.Date,
+            IService bookedService = null;
+            if (vehicleRequestDto.BookedService != null)
+                bookedService = factory.CreateService(vehicleRequestDto.BookedService.Date,
                                                            vehicleRequestDto.BookedService.Description);
 
-            IVehicle vehicle = factory.CreateVehicle(vehicleRequestDto.RegistrationNumber, vehicleRequestDto.Model,
+                IVehicle vehicle = factory.CreateVehicle(vehicleRequestDto.RegistrationNumber, vehicleRequestDto.Model,
                                       vehicleRequestDto.Brand, vehicleRequestDto.Weight,
                                       vehicleRequestDto.FirstTimeInTraffic, vehicleRequestDto.IsRegistered,
                                       bookedService, vehicleServices);
@@ -40,7 +42,7 @@ namespace VehicleRegister.API.Controllers
         }
 
        [HttpPost]
-       [Route("RegisterVehicle")]
+       [Route("api/registervehicle")]
        public IHttpActionResult RegisterVehicle(VehicleRequestDto vehicleRequestDto)
         {
             var vehicle = CreateVehicleFromDto(vehicleRequestDto);
@@ -49,22 +51,24 @@ namespace VehicleRegister.API.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        [Route("GetVehicleList")]
-        public IHttpActionResult GetVehicleList()
+        [HttpPost]
+        [Route("api/getvehiclelist")]
+        public IHttpActionResult GetVehicleList(SearchRequestDto searchRequestDto)
         {
-            return Ok(vehicleRepository.GetAllVehicles()); 
+            List<IVehicle> vehicleList = vehicleRepository.GetAllVehicles();
+            vehicleList = vehicleService.Search(vehicleList, searchRequestDto.search);
+            return Ok(vehicleList);
         }
 
         [HttpGet]
-        [Route("GetVehicle")]
+        [Route("api/getvehicle")]
         public IHttpActionResult GetVehicle(string registrationNumber)
         {
             return Ok(vehicleRepository.GetVehicle(registrationNumber)); 
         }
 
         [HttpPost]
-        [Route("RemoveVehicle")]
+        [Route("api/removevehicle")]
         public IHttpActionResult RemoveVehicle(string registrationNumber)
         {
             vehicleRepository.DeleteVehicle(registrationNumber);
@@ -72,7 +76,7 @@ namespace VehicleRegister.API.Controllers
         }
 
         [HttpPost]
-        [Route("UpdateVehicle")]
+        [Route("api/updatevehicle")]
         public IHttpActionResult UpdateVehicle(VehicleRequestDto vehicleRequestDto)
         {
             var vehicle = CreateVehicleFromDto(vehicleRequestDto);
@@ -82,7 +86,7 @@ namespace VehicleRegister.API.Controllers
         }
 
         [HttpPost]
-        [Route("BookService")]
+        [Route("api/bookservice")]
         public IHttpActionResult BookService(VehicleRequestDto vehicleRequestDto)
         {
             var vehicle = CreateVehicleFromDto(vehicleRequestDto);
@@ -92,7 +96,7 @@ namespace VehicleRegister.API.Controllers
         }
 
         [HttpPost]
-        [Route("CompleteService")]
+        [Route("api/completeservice")]
         public IHttpActionResult CompleteService(string registrationNumber)
         {
             vehicleRepository.CompleteService(registrationNumber);

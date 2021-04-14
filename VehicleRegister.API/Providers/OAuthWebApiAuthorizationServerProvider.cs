@@ -29,18 +29,19 @@ namespace VehicleRegister.Providers
             var accountList = accountRepository.GetAllAccounts();
             var account = accountList.Where(o => o.Username == context.UserName).FirstOrDefault();
             if (account == null)
-                throw new Exception("Username doesn't match any in database");
+            {
+                context.SetError("Username doesn't exist in database");
+                return;
+            }
 
-            var databasePasswordEncrypted = account.Password;
-            var databasePasswordByte = Convert.FromBase64String(databasePasswordEncrypted);
+            var databasePasswordByte = Convert.FromBase64String(account.Password);
             var databasePassword = Encoding.UTF8.GetString(databasePasswordByte);
 
-            var inputPasswordEncrypted = context.Password;
-            var inputPasswordByte = Convert.FromBase64String(inputPasswordEncrypted);
+            var inputPasswordByte = Convert.FromBase64String(context.Password);
             var inputPassword = Encoding.UTF8.GetString(inputPasswordByte);
             
 
-            if(inputPassword== databasePassword)
+            if(inputPassword == databasePassword)
             {
                 identity.AddClaim(new Claim(ClaimTypes.Role, account.Authorization));
                 identity.AddClaim(new Claim(ClaimTypes.Name, account.Username));
@@ -48,7 +49,7 @@ namespace VehicleRegister.Providers
             }
             else
             {
-                context.SetError("invalid grant", "provided username and password is incorrect.");
+                context.SetError("Invalid grant", "provided username and password is incorrect.");
                 return;
             }
         }

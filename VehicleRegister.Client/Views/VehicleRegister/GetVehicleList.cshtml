@@ -1,0 +1,80 @@
+﻿
+@{ ViewBag.Title = "Create Account"; }
+
+<style type="text/css">
+
+    #input {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        height: 25px;
+        margin-bottom: 5px;
+    }
+
+    #dateinput {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+
+    #label {
+        text-align: left;
+        width: 320px;
+        margin: 0 auto;
+    }
+
+    #Biglabel {
+        font-size: 18px;
+        width: 320px;
+        margin: 8px auto;
+        margin-top: 18px;
+    }
+
+    #checkboxlabel {
+        text-align: left;
+        width: 180px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: -5px;
+    }
+
+    #checkbox {
+        width: 18px;
+        height: 18px;
+        vertical-align: text-bottom;
+    }
+
+    #Searchbox {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        height: 25px;
+        margin-bottom: 5px;
+    }
+
+    #div {
+        text-align: center
+    }
+</style>
+
+<div class="jumbotron">
+    <h1 style="text-align:center">Register Vehicle</h1>
+    <p style="text-align:center">@ViewBag.Message</p>
+</div>
+
+<div id="div" class="row">
+    <form action="GetVehicleList" method="post">
+        <div>
+            <input id="Searchbox" type="text" name="search" minlenght="1">
+            <input type="submit" value="Search">
+        </div> 
+    </form>
+    <div>
+        @ViewBag.boxes
+    </div>
+    <div>
+        <label id="Biglabel">Registration Number | Model | Brand:</label>
+    </div>
+    <pre id="label">@ViewBag.Content</pre>
+</div>

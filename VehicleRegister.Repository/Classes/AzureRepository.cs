@@ -89,7 +89,7 @@ namespace VehicleRegister.Repository.Classes
                 RegistrationNumber = vehicle.RegistrationNumber,
                 Model = vehicle.Model,
                 Brand = vehicle.Brand,
-                TypeOfVehicle = vehicle.GetType().ToString(),
+                TypeOfVehicle = vehicle.GetType().Name,
                 Weight = vehicle.Weight,
                 FirstTimeInTraffic = vehicle.FirstTimeInTraffic,
                 IsRegistered = vehicle.IsRegistered,

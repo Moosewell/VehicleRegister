@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using VehicleRegister.Domain.Classes;
 using VehicleRegister.DTO.dto;
+using VehicleRegister.Providers;
 using VehicleRegister.Repository.Interfaces;
 
 namespace VehicleRegister.API.Controllers
@@ -13,6 +14,7 @@ namespace VehicleRegister.API.Controllers
             this.accountRepository = accountRepository;
         }
 
+        [Authorize(Roles = "Super Admin")]
         [HttpPost]
         [Route("api/createaccount")]
         public IHttpActionResult CreateAccount(AccountRequestDto accountRequestDto)

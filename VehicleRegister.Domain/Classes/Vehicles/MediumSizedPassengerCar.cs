@@ -7,7 +7,7 @@ using VehicleRegister.Domain.Interfaces;
 
 namespace VehicleRegister.Domain.Classes.Vehicles
 {
-    public class MediumSizedPassengerCar : Vehicle, IVehicle
+    public class MediumSizedPassengerCar : IVehicle
     {
         public MediumSizedPassengerCar(string registrationNumber, string model, string brand, double weight, DateTime firstTimeInTraffic,
                        bool isRegistered, IService bookedService, IList<IService> serviceHistory)
@@ -32,6 +32,41 @@ namespace VehicleRegister.Domain.Classes.Vehicles
         private IService bookedService { get; set; }
         private IList<IService> serviceHistory { get; set; }
         private double yearlyFee { get; set; }
+
+        public string RegistrationNumber => registrationNumber;
+        public string Model => model;
+        public string Brand => brand;
+        public double Weight => weight;
+        public DateTime FirstTimeInTraffic => firstTimeInTraffic;
+        public bool IsRegistered => isRegistered;
+        public IService BookedService => bookedService;
+        public IList<IService> ServiceHistory => serviceHistory;
+        public double YearlyFee => yearlyFee;
+
+        public void Register()
+        {
+            isRegistered = true;
+        }
+
+        public void Unregister()
+        {
+            isRegistered = false;
+        }
+
+        private void MoveCompletedServiceToHistory()
+        {
+            serviceHistory.Add(bookedService);
+            bookedService = null;
+        }
+
+        public void BookNewService(IService service)
+        {
+            bookedService = service;
+        }
+        public void CompleteService()
+        {
+            MoveCompletedServiceToHistory();
+        }
 
     }
 }

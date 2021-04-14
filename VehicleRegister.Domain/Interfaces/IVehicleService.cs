@@ -9,6 +9,6 @@ namespace VehicleRegister.Domain.Interfaces
 {
     public interface IVehicleService
     {
-
+        List<IVehicle> Search(List<IVehicle> vehicleList, string search);
     }
 }
