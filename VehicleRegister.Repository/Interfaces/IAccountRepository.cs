@@ -12,7 +12,5 @@ namespace VehicleRegister.Repository.Interfaces
         void RegisterAccount(IAccount account);
         List<IAccount> GetAllAccounts();
         IAccount GetAccount(string username);
-        void UpdateAccount(IAccount account);
-        void DeleteAccount(string username);
     }
 }

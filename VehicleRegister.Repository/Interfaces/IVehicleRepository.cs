@@ -15,6 +15,5 @@ namespace VehicleRegister.Repository.Interfaces
         void UpdateVehicle(IVehicle vehicle);
         void DeleteVehicle(string registrationNumber);
         void CompleteService(string registrationNumber);
-        void BookService(IVehicle vehicle);
     }
 }

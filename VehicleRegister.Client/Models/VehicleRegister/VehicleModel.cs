@@ -17,6 +17,8 @@ namespace VehicleRegister.Client.Models.VehicleRegister
         public ServiceModel BookedService { get; set; }
         public List<ServiceModel> ServiceHistory { get; set; }
         
+        public DateTime Date { get; set; }
+        public string Description { get; set; }
         public double YearlyIncome { get; set; }
         public string VehicleType { get; set; }
 
@@ -29,8 +31,9 @@ namespace VehicleRegister.Client.Models.VehicleRegister
             request.Weight = Weight;
             request.FirstTimeInTraffic = FirstTimeInTraffic;
             request.IsRegistered = IsRegistered;
+            BookedService = new ServiceModel(Date, Description);
 
-            if(BookedService != null)
+            if (BookedService != null)
                 request.BookedService = GetServiceForDto(BookedService);
 
             if(ServiceHistory != null)
@@ -47,6 +50,21 @@ namespace VehicleRegister.Client.Models.VehicleRegister
             service.Description = serviceModel.Description;
 
             return service;
+        }
+
+        public string GetVehicleType()
+        {
+            switch (Weight)
+            {
+                case double w when (w > 1800 && w < 2500):
+                    return "MediumSizedPassengerCar";
+
+                case double w when (w > 2500):
+                    return "HeavyVehicle";
+
+                default:
+                    return "LightPassengerCar";
+            }
         }
     }
 }

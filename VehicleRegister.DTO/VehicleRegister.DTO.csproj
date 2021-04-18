@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dto\AccountRequestDto.cs" />
+    <Compile Include="dto\BookServiceRequestDto.cs" />
     <Compile Include="dto\LoginRequestDto.cs" />
+    <Compile Include="dto\RegistrationNumberRequestDto.cs" />
     <Compile Include="dto\SearchRequestDto.cs" />
     <Compile Include="dto\ServiceRequestDto.cs" />
     <Compile Include="dto\VehicleRequestDto.cs" />

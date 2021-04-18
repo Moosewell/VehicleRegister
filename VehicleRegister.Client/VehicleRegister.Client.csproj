@@ -127,8 +127,9 @@
     </Compile>
     <Compile Include="Models\Account\AccountModel.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
-    <Compile Include="Models\Account\UserIdentity.cs" />
+    <Compile Include="Models\Account\TokenReciever.cs" />
     <Compile Include="Models\EndPoints.cs" />
+    <Compile Include="Models\VehicleRegister\BookServiceModel.cs" />
     <Compile Include="Models\VehicleRegister\ServiceModel.cs" />
     <Compile Include="Models\VehicleRegister\VehicleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,6 +145,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\MaxNewtonVehicleRegisterClient - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -172,6 +174,8 @@
     <Content Include="Views\VehicleRegister\GetVehicleList.cshtml" />
     <Content Include="Views\VehicleRegister\RegisterVehicle.cshtml" />
     <Content Include="Views\VehicleRegister\GetVehicle.cshtml" />
+    <Content Include="Views\VehicleRegister\UpdateVehicle.cshtml" />
+    <Content Include="Views\VehicleRegister\BookService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

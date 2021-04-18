@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Create Account";
+}
+
+<style type="text/css">
+
+    #input {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        height: 25px;
+        margin-bottom: 5px;
+    }
+
+    #dateinput {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+
+    #label {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+    }
+    #Biglabel {
+        font-size: 18px;
+        width: 210px;
+        margin: 8px auto;
+        margin-top: 18px;
+    }
+
+    #checkboxlabel {
+        text-align: left;
+        width: 180px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: -5px;
+    }
+
+    #checkbox 
+    {
+        width: 18px;
+        height: 18px;
+        vertical-align: text-bottom;
+    }
+
+    #textbox {
+        width: 210px;
+        height: 105px;
+        word-break: break-word;
+    }
+
+    #firsttimeintrafic {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+
+    #bookeddate {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+
+    #div {
+        text-align: center
+    }
+</style>
+
+<div class="jumbotron">
+    <h1 style="text-align:center">Update Vehicle</h1>
+    <p style="text-align:center">@ViewBag.Message</p>
+</div>
+
+<div id="div" class="row">
+    <form action="UpdateVehicle" method="post">
+        <div>
+            <label id="label" for="registrationnumber">Registration Number:</label>
+        </div>
+        <div>
+            <input type="text" id="label" name="registrationnumber" value="@ViewBag.RegistrationNumber" readonly>
+        </div>
+        <div>
+            <label id="label" for="model">Model:</label>
+        </div>
+        <div>
+            <input id="input" type="text" name="model" value="@ViewBag.Model" required minlenght="3" maxlength="20" size="22">
+        </div>
+        <div>
+            <label id="label" for="brand">Brand:</label>
+        </div>
+        <div>
+            <select name="brand" id="input">
+                <option hidden selected value="@ViewBag.Brand">@ViewBag.Brand</option>
+                <option value="Toyota"> Toyota</option>
+                <option value="Honda"> Honda</option>
+                <option value="Chevrolet"> Chevrolet</option>
+                <option value="Ford"> Ford</option>
+                <option value="Mercedes-Benz"> Mercedes-Benz</option>
+                <option value="Jeep"> Jeep</option>
+                <option value="BMW"> BMW</option>
+                <option value="Porsche"> Porsche</option>
+                <option value="Subaru"> Subaru</option>
+                <option value="Nissan"> Nissan</option>
+            </select>
+        </div>
+
+        <div>
+            <label id="label" for="weight">Weight:</label>
+        </div>
+        <div>
+            <input id="input" type="number" name="weight" value="@ViewBag.Weight" required min="0" size="22">
+        </div>
+        <div>
+            <label id="label" for="firsttimeintraffic">Trafic Debut:</label>
+        </div>
+        <div>
+            <input id="firsttimeintrafic" type="date" value="@ViewBag.FirstTimeInTrafic" name="firsttimeintraffic">
+        </div>
+        <div>
+            <label id="checkboxlabel" for="isregistered">Is Registered For Trafic:</label>
+            <input id="checkbox" type="checkbox" @(@ViewBag.IsRegistered ? "checked" : "") name="isregistered" value="false">
+        </div>
+        <div>
+            <label id="Biglabel" for="bookedservice">Booked Service</label>
+        </div>
+        <div>
+            <label id="label" for="date">Booked Date:</label>
+        </div>
+        <div>
+            <input id="bookeddate" type="date" value="@ViewBag.Date" name="date">
+
+        </div>
+        <div>
+            <label id="label" for="description">Service Description:</label>
+        </div>
+        <div>
+            <textarea id="textbox" rows="5" cols="30" value="@ViewBag.Description" name="description"> @ViewBag.Description</textarea>
+        </div>
+
+        <input style="margin-top: 20px;width:150px" type="submit" value="Update">
+    </form>
+</div>

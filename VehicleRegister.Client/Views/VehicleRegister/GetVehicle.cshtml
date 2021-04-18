@@ -1,15 +1,56 @@
-﻿@{
-    ViewBag.Title = "Create Account";
-}
+﻿
+@{ ViewBag.Title = "Get Vehicle"; }
 
 <style type="text/css">
 
-    #button {
-        border: 3px solid black;
-        padding: 5px;
-        text-align: center;
-        width: 300px;
-        margin: 3px auto;
+    #input {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        height: 25px;
+        margin-bottom: 5px;
+    }
+
+    #dateinput {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+
+    #label {
+        text-align: left;
+        width: 320px;
+        margin: 0 auto;
+    }
+
+    #Biglabel {
+        font-size: 18px;
+        width: 320px;
+        margin: 8px auto;
+        margin-top: 18px;
+    }
+
+    #checkboxlabel {
+        text-align: left;
+        width: 180px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: -5px;
+    }
+
+    #checkbox {
+        width: 18px;
+        height: 18px;
+        vertical-align: text-bottom;
+    }
+
+    #Searchbox {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        height: 25px;
+        margin-bottom: 5px;
     }
 
     #div {
@@ -18,29 +59,21 @@
 </style>
 
 <div class="jumbotron">
-    <h1 style="text-align:center">Vehicle Register Home</h1>
+    <h1 style="text-align:center">Vehicle</h1>
     <p style="text-align:center">@ViewBag.Message</p>
 </div>
 
 <div id="div" class="row">
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("RegisterVehicle", "VehicleRegister")'">Register New Vehicle</button>
-    </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("GetVehicleList", "VehicleRegister")'">Get List Of All Vehicles</button>
-    </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("GetVehicle", "VehicleRegister")'">Get vehicle By Registration Number</button>
-    </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("RemoveVehicle", "VehicleRegister")'">Remove Vehicle</button>
-    </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("UpdateVehicle", "VehicleRegister")'">Update Vehicle</button>
-    </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("ViewService", "VehicleRegister")'">Book Services for Vehicles</button>
-    </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("ViewServiceHistory", "VehicleRegister")'">View Service History</button>
-    </div>
+    <p id="label">Registration Number: @ViewBag.RegistrationNumber</p>
+    <p id="label">Model: @ViewBag.Model</p>
+    <p id="label">Brand: @ViewBag.Brand</p>
+    <p id="label">Type Of Vehicle: @ViewBag.VehicleType</p>
+    <p id="label">Weight: @ViewBag.Weight</p>
+    <p id="label">Trafic Debut: @ViewBag.FirstTimeInTrafic</p>
+    <p id="label">Is Registered For Trafic: @ViewBag.IsRegistered</p>
+    <label id="Biglabel">Booked Service:</label>
+    <p id="label">Booked Date: @ViewBag.Date</p>
+    <p id="label">Service Description: @ViewBag.Description</p>
+    <label id="Biglabel">Service History:</label>
+    <pre>@ViewBag.ServiceHistory</pre>
+</div>

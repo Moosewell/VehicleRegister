@@ -20,7 +20,7 @@ namespace VehicleRegister.Repository.Classes
 
         public void DeleteVehicle(string registrationNumber)
         {
-            var dataBaseVehicle = dataContext.Vehicles.Where(o => o.RegistrationNumber == registrationNumber).FirstOrDefault();
+            var dataBaseVehicle = dataContext.Vehicles.Where(o => o.RegistrationNumber.Equals(registrationNumber)).FirstOrDefault();
             if (dataBaseVehicle == null)
                 throw new Exception("No vehicle found in database");
 
@@ -54,6 +54,14 @@ namespace VehicleRegister.Repository.Classes
             return vehicleList;
         }
 
+        private List<int> GetServiceDatabaseIDListForVehicle(string registrationNumber)
+        {
+            var databaseVehicleServiceList = dataContext.VehicleServices.Where(o => o.RegistrationNumber == registrationNumber).ToList();
+            var serviceIdList = databaseVehicleServiceList.Select(o => o.ServiceId).ToList();
+
+            return serviceIdList;
+        }
+
         public IVehicle GetVehicle(string registrationNumber)
         {
             VehicleFactory factory = new VehicleFactory();
@@ -61,8 +69,7 @@ namespace VehicleRegister.Repository.Classes
             if (dataBaseVehicle == null)
                 throw new Exception("No vehicle found in database");
 
-            var databaseVehicleServiceList = dataContext.VehicleServices.Where(o => o.RegistrationNumber == registrationNumber);
-            var serviceIdList = databaseVehicleServiceList.Select(o => o.ServiceId);
+            var serviceIdList = GetServiceDatabaseIDListForVehicle(registrationNumber);
             List<IService> serviceList = new List<IService>();
             IService bookedService = null;
             foreach (var id in serviceIdList)
@@ -70,9 +77,12 @@ namespace VehicleRegister.Repository.Classes
                 var databaseService = dataContext.Services.Where(o => o.Id == id).Single();
                 if (databaseService.Completed == false)
                 {
-                    bookedService = factory.CreateService(databaseService.Date, databaseService.Description);
+                    bookedService = factory.CreateService(databaseService.Date.Date, databaseService.Description);
                 }
-                serviceList.Add(factory.CreateService(databaseService.Date, databaseService.Description));
+                else
+                { 
+                serviceList.Add(factory.CreateService(databaseService.Date.Date, databaseService.Description));
+                }
             }
 
             IVehicle vehicle = factory.CreateVehicle(dataBaseVehicle.RegistrationNumber, dataBaseVehicle.Model,
@@ -91,7 +101,7 @@ namespace VehicleRegister.Repository.Classes
                 Brand = vehicle.Brand,
                 TypeOfVehicle = vehicle.GetType().Name,
                 Weight = vehicle.Weight,
-                FirstTimeInTraffic = vehicle.FirstTimeInTraffic,
+                FirstTimeInTraffic = vehicle.FirstTimeInTraffic.Date,
                 IsRegistered = vehicle.IsRegistered,
             };
             dataContext.Vehicles.InsertOnSubmit(newVehicle);
@@ -104,7 +114,7 @@ namespace VehicleRegister.Repository.Classes
         {
             var newbookedService = new Service
             {
-                Date = service.Date,
+                Date = service.Date.Date,
                 Description = service.Description,
                 Completed = isCompleted
             };
@@ -150,23 +160,40 @@ namespace VehicleRegister.Repository.Classes
             databaseVehicle.Weight = vehicle.Weight;
             databaseVehicle.FirstTimeInTraffic = vehicle.FirstTimeInTraffic;
             databaseVehicle.IsRegistered = vehicle.IsRegistered;
-        }
 
-        public void BookService(IVehicle vehicle)
-        {
-            AddService(vehicle.RegistrationNumber, vehicle.BookedService, false);
+            if(vehicle.BookedService != null)
+            {
+                bool bookedServiceNeedsToBeUpdated = true;
+                var serviceIdList = GetServiceDatabaseIDListForVehicle(vehicle.RegistrationNumber);
+                foreach (var id in serviceIdList)
+                {
+                    var databaseService = dataContext.Services.Where(o => o.Id == id).Single();
+                    if (databaseService.Completed == false)
+                    {
+                        databaseService.Date = vehicle.BookedService.Date.Date;
+                        databaseService.Description = vehicle.BookedService.Description;
+                        bookedServiceNeedsToBeUpdated = false;
+                    }
+                }
+                if(bookedServiceNeedsToBeUpdated)
+                {
+                    AddService(vehicle.RegistrationNumber, vehicle.BookedService, false);
+                }
+            }
+
+            dataContext.SubmitChanges();
         }
 
         public void CompleteService(string registrationNumber)
         {
-            var databaseVehicleServiceList = dataContext.VehicleServices.Where(o => o.RegistrationNumber == registrationNumber);
-            var serviceIdList = databaseVehicleServiceList.Select(o => o.ServiceId);
-            foreach(var id in serviceIdList)
+            var serviceIdList = GetServiceDatabaseIDListForVehicle(registrationNumber);
+            foreach (var id in serviceIdList)
             {
                 var service = dataContext.Services.Where(o => o.Id == id).Single();
                 if (service.Completed == false)
                     service.Completed = true;
             }
+            dataContext.SubmitChanges();
         }
 
         public void RegisterAccount(IAccount account)
@@ -209,16 +236,6 @@ namespace VehicleRegister.Repository.Classes
                                                           databaseAccount.Authorization, 
                                                           databaseAccount.Password);
             return account;
-        }
-
-        public void UpdateAccount(IAccount account)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAccount(string username)
-        {
-            throw new NotImplementedException();
         }
     }
 }

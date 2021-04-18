@@ -11,9 +11,23 @@
         width: 300px;
         margin: 3px auto;
     }
-
+    #input {
+        text-align: left;
+        width: 200px;
+        margin: 0 auto;
+        height: 25px;
+        margin-bottom: 5px;
+    }
+    #label {
+        text-align: left;
+        width: 200px;
+        margin: 0 auto;
+    }
     #div {
         text-align: center
+    }
+    #submit{
+        width: 80px;
     }
 </style>
 
@@ -29,19 +43,43 @@
     <div>
         <button id="button" type="button" onclick="location.href='@Url.Action("GetVehicleList", "VehicleRegister")'">Get List Of All Vehicles</button>
     </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("GetVehicle", "VehicleRegister")'">Get vehicle By Registration Number</button>
+    <div id="button">
+        <form action="GetVehicle" method="post">
+            <div>
+                <label type="label">Get Vehicle</label>
+            </div>
+            <input type="text" id="input" name="registrationnumber" minlength="6" maxlength="6" required>
+            <input id="submit" type="submit" value="Get">
+        </form>
+    </div>
+    <div id="button">
+        <form action="RemoveVehicle" method="post">
+            <div>
+                <label type="label">Remove Vehicle</label>
+            </div>
+            <input type="text" id="input" name="registrationnumber" minlength="6" maxlength="6" required>
+            <input id="submit" type="submit" value="Remove">
+        </form>
+    </div>
+    <div id="button">
+        <form action="UpdateVehicleView" method="post">
+            <div>
+                <label type="label">Update Vehicle</label>
+            </div>
+            <input type="text" id="input" name="registrationnumber" minlength="6" maxlength="6" required>
+            <input id="submit" type="submit" value="Update">
+        </form>
+    </div>
+    <div id="button">
+        <form action="CompleteService" method="post">
+            <div>
+                <label type="label">Complete Service</label>
+            </div>
+            <input type="text" id="input" name="registrationnumber" minlength="6" maxlength="6" required>
+            <input id="submit" type="submit" value="Complete">
+        </form>
     </div>
     <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("RemoveVehicle", "VehicleRegister")'">Remove Vehicle</button>
-    </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("UpdateVehicle", "VehicleRegister")'">Update Vehicle</button>
-    </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("ViewService", "VehicleRegister")'">Book Services for Vehicles</button>
-    </div>
-    <div>
-        <button id="button" type="button" onclick="location.href='@Url.Action("ViewServiceHistory", "VehicleRegister")'">View Service History</button>
+        <button id="button" type="button" onclick="location.href='@Url.Action("BookServiceView", "VehicleRegister")'">Book Service For Vehicles</button>
     </div>
 </div>

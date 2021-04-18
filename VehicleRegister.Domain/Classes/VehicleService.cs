@@ -34,5 +34,31 @@ namespace VehicleRegister.Domain.Classes
             return newVehicleList;
         }
 
+        public List<IVehicle> BookService(IService service, List<IVehicle> vehicles)
+        {
+            List<string> vehiclesWithBookings = new List<string>();
+
+            foreach(IVehicle vehicle in vehicles)
+            {
+                if (vehicle.BookedService != null)
+                    vehiclesWithBookings.Add(vehicle.RegistrationNumber);
+
+                vehicle.BookNewService(service);
+            }
+            if (vehiclesWithBookings.Count > 0)
+            {
+                string BookedRegistrationNumbers = "";
+                for(var i = 0; 0 < vehiclesWithBookings.Count; i++)
+                {
+                    BookedRegistrationNumbers += vehiclesWithBookings[i];
+                    BookedRegistrationNumbers += i + 1 == vehiclesWithBookings.Count ? "" : ",";
+                }
+                throw new Exception($"Vehicles with following registration numbers already have a service booked: {BookedRegistrationNumbers}");
+            }
+                
+
+            return vehicles;
+        }
+
     }
 }

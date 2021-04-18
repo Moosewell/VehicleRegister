@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Classes\Account.cs" />
     <Compile Include="Classes\Vehicles\HeavyVehicle.cs" />
-    <Compile Include="Classes\Vehicles\Vehicle.cs" />
     <Compile Include="Classes\Vehicles\MediumSizedPassengerCar.cs" />
     <Compile Include="Classes\Service.cs" />
     <Compile Include="Classes\Vehicles\LightPassengerCar.cs" />

@@ -32,45 +32,34 @@ namespace VehicleRegister.Client.Controllers
             return View("CreateAccount");
         }
 
-        private string GetToken(LoginModel loginModel)
+        private TokenReciever GetToken(LoginModel loginModel)
         {
-            string token = "";
+            TokenReciever RecievedToken = null;
             using (HttpClient client = new HttpClient())
             {
-                //var jsonRequestString = JsonConvert.SerializeObject(loginModel.GetDto());
                 var stringContent = new StringContent(loginModel.GetTokenRequestString(), Encoding.UTF8, "application/x-www-form-urlencoded");
                 var response = client.PostAsync(endPoints.GetToken, stringContent).Result;
                 if(response != null)
                 {
-                    token = response.Content.ReadAsStringAsync().Result;
-                    //var jsonString = response.Content.ReadAsStringAsync().Result;
-                    //token = JsonConvert.DeserializeObject<string>(jsonString);
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    RecievedToken = JsonConvert.DeserializeObject<TokenReciever>(jsonString);
                 }
             }
-            return token;
+            return RecievedToken;
         }
 
         public ActionResult Login(LoginModel loginModel)
         {
-            string token = GetToken(loginModel);
-            if(string.IsNullOrEmpty(token))
-            {
-                ViewBag.message = "Incorrect Username and Password!";
-                return View("Login");
-            }
-
-            var userIdentity = new UserIdentity
-            {
-                Username = loginModel.Username,
-                Token = token
-            };
-
-            var loggedInUsers = new List<UserIdentity>();
-            loggedInUsers.Add(userIdentity);
-            Session["OurBearerToken"] = loggedInUsers;
+            TokenReciever token = GetToken(loginModel);
+            Session["TokenKey"] = token.token_type + " " + token.access_token;
 
             return RedirectToAction("HomeView", "VehicleRegister");
-            //return View("~/Views/VehicleRegister/Home");
+        }
+
+        public ActionResult Logout()
+        {
+            Session["TokenKey"] = null;
+            return View("Login");
         }
 
         public ActionResult CreateAccount(AccountModel AccountModel)
@@ -78,6 +67,7 @@ namespace VehicleRegister.Client.Controllers
            
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Add("Authorization", Session["TokenKey"].ToString());
                 AccountRequestDto request = AccountModel.GetDto();
                 var jsonRequestString = JsonConvert.SerializeObject(request);
                 var stringContent = new StringContent(jsonRequestString, UnicodeEncoding.UTF8, "application/json");

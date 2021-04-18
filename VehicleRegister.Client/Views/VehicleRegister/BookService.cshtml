@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Create Account";
+}
+
+<style type="text/css">
+
+    #input {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        height: 25px;
+        margin-bottom: 5px;
+    }
+
+    #dateinput {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+
+    #label {
+        text-align: left;
+        width: 210px;
+        margin: 0 auto;
+    }
+    #Biglabel {
+        font-size: 18px;
+        width: 270px;
+        margin: 8px auto;
+        margin-top: 18px;
+    }
+
+    #checkboxlabel {
+        text-align: left;
+        width: 180px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: -5px;
+    }
+
+    #checkbox 
+    {
+        width: 18px;
+        height: 18px;
+        vertical-align: text-bottom;
+    }
+
+    #textbox {
+        width: 210px;
+        height: 105px;
+        word-break: break-word;
+    }
+
+    #div {
+        text-align: center
+    }
+</style>
+
+<div class="jumbotron">
+    <h1 style="text-align:center">Book Service for Vehicles</h1>
+    <p style="text-align:center">@ViewBag.Message</p>
+</div>
+
+<div id="div" class="row">
+    <form action="BookService" method="post">
+        <div>
+            <label id="Biglabel" for="bookedservice">Service Information</label>
+        </div>
+        <div>
+            <label id="label" for="date">Booked Date:</label>
+        </div>
+        <div>
+            <input id="dateinput" type="date" name="date">
+        </div>
+        <div>
+            <label id="label" for="description">Service Description:</label>
+        </div>
+        <div>
+            <textarea id="textbox" rows="5" cols="30" name="description"> </textarea>
+        </div>
+        <div>
+            <label id="Biglabel" for="bookedservice">Vehicles To Book For Service:</label>
+        </div>
+        <div>
+            <label id="label" for="vehicle1">Vehicle 1:</label>
+        </div>
+        <div>
+            <input id="input" type="text" placeholder="Registration Number" name="vehicleoneregistrationnumber" required minlenght="6" maxlength="6" size="22">
+        </div>
+        <div>
+            <label id="label" for="vehicle2">Vehicle 2:</label>
+        </div>
+        <div>
+            <input id="input" type="text" placeholder="Registration Number" name="vehicletworegistrationnumber"  minlenght="6" maxlength="6" size="22">
+        </div>
+        <div>
+            <label id="label" for="vehicle3">Vehicle 3:</label>
+        </div>
+        <div>
+            <input id="input" type="text" placeholder="Registration Number" name="vehiclethreeregistrationnumber"  minlenght="6" maxlength="6" size="22">
+        </div>
+
+        <input style="margin-top: 20px;width:150px" type="submit" value="Register">
+    </form>
+</div>

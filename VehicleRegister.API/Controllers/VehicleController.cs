@@ -10,6 +10,7 @@ using VehicleRegister.Repository.Interfaces;
 
 namespace VehicleRegister.API.Controllers
 {
+    [Authorize]
     public class VehicleController : ApiController
     {
         private readonly IVehicleService vehicleService;
@@ -41,6 +42,7 @@ namespace VehicleRegister.API.Controllers
             return vehicle;
         }
 
+       [Authorize(Roles = "Super Admin,Admin")]
        [HttpPost]
        [Route("api/registervehicle")]
        public IHttpActionResult RegisterVehicle(VehicleRequestDto vehicleRequestDto)
@@ -51,6 +53,7 @@ namespace VehicleRegister.API.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Super Admin,Admin")]
         [HttpPost]
         [Route("api/getvehiclelist")]
         public IHttpActionResult GetVehicleList(SearchRequestDto searchRequestDto)
@@ -60,21 +63,24 @@ namespace VehicleRegister.API.Controllers
             return Ok(vehicleList);
         }
 
-        [HttpGet]
+        [Authorize(Roles = "Super Admin,Admin")]
+        [HttpPost]
         [Route("api/getvehicle")]
-        public IHttpActionResult GetVehicle(string registrationNumber)
+        public IHttpActionResult GetVehicle(VehicleRequestDto vehicleRequestDto)
         {
-            return Ok(vehicleRepository.GetVehicle(registrationNumber)); 
+            return Ok(vehicleRepository.GetVehicle(vehicleRequestDto.RegistrationNumber)); 
         }
 
+        [Authorize(Roles = "Super Admin,Admin")]
         [HttpPost]
         [Route("api/removevehicle")]
-        public IHttpActionResult RemoveVehicle(string registrationNumber)
+        public IHttpActionResult RemoveVehicle(VehicleRequestDto vehicleRequestDto)
         {
-            vehicleRepository.DeleteVehicle(registrationNumber);
+            vehicleRepository.DeleteVehicle(vehicleRequestDto.RegistrationNumber);
             return Ok(); 
         }
 
+        [Authorize(Roles = "Super Admin,Admin")]
         [HttpPost]
         [Route("api/updatevehicle")]
         public IHttpActionResult UpdateVehicle(VehicleRequestDto vehicleRequestDto)
@@ -85,21 +91,35 @@ namespace VehicleRegister.API.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Super Admin,Admin")]
         [HttpPost]
         [Route("api/bookservice")]
-        public IHttpActionResult BookService(VehicleRequestDto vehicleRequestDto)
+        public IHttpActionResult BookService(BookServiceRequestDto bookServiceRequestDto)
         {
-            var vehicle = CreateVehicleFromDto(vehicleRequestDto);
+            var factory = new VehicleFactory();
+            IService service = factory.CreateService(bookServiceRequestDto.Date, bookServiceRequestDto.Description);
 
-            vehicleRepository.BookService(vehicle);
+            List<IVehicle> vehicles = new List<IVehicle>();
+            foreach (string registrationNumber in bookServiceRequestDto.vehicleRegistrationNumbers)
+            {
+                vehicles.Add(vehicleRepository.GetVehicle(registrationNumber));
+            }
+
+            vehicles = vehicleService.BookService(service, vehicles);
+
+            foreach (IVehicle vehicle in vehicles)
+            {
+                vehicleRepository.UpdateVehicle(vehicle);
+            }
             return Ok();
         }
 
+        [Authorize(Roles = "Super Admin,Admin")]
         [HttpPost]
         [Route("api/completeservice")]
-        public IHttpActionResult CompleteService(string registrationNumber)
+        public IHttpActionResult CompleteService(RegistrationNumberRequestDto registrationNumberRequestDto)
         {
-            vehicleRepository.CompleteService(registrationNumber);
+            vehicleRepository.CompleteService(registrationNumberRequestDto.RegistrationNumber);
             return Ok();
         }
 
