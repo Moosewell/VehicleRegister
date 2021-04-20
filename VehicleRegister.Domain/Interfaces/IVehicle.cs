@@ -17,11 +17,6 @@ namespace VehicleRegister.Domain.Interfaces
         IService BookedService { get; }
         IList<IService> ServiceHistory { get; }
         double YearlyFee { get; }
-
-        void Register();
-        void Unregister();
         void BookNewService(IService service);
-        void CompleteService();
-
     }
 }

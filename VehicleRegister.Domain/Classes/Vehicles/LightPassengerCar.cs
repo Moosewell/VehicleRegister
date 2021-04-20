@@ -43,30 +43,9 @@ namespace VehicleRegister.Domain.Classes.Vehicles
         public IList<IService> ServiceHistory => serviceHistory;
         public double YearlyFee => yearlyFee;
 
-        public void Register()
-        {
-            isRegistered = true;
-        }
-
-        public void Unregister()
-        {
-            isRegistered = false;
-        }
-
-        private void MoveCompletedServiceToHistory()
-        {
-            serviceHistory.Add(bookedService);
-            bookedService = null;
-        }
-
         public void BookNewService(IService service)
         {
             bookedService = service;
         }
-        public void CompleteService()
-        {
-            MoveCompletedServiceToHistory();
-        }
-
     }
 }

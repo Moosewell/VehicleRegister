@@ -7,10 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VehicleRegister.API\VehicleRegister.API.csproj" />
+    <ProjectReference Include="..\VehicleRegister.Domain\VehicleRegister.Domain.csproj" />
+    <ProjectReference Include="..\VehicleRegister.DTO\VehicleRegister.DTO.csproj" />
   </ItemGroup>
 
 </Project>

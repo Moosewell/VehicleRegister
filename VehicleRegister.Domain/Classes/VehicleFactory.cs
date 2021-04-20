@@ -5,7 +5,7 @@ using VehicleRegister.Domain.Interfaces;
 
 namespace VehicleRegister.Domain.Classes
 {
-    public class VehicleFactory
+    public class VehicleFactory : IVehicleFactory
     {
         public IVehicle CreateVehicle(string registrationNumber, string model, string brand, double weight, DateTime firstTimeInTraffic,
                        bool isRegistered, IService bookedService, IList<IService> serviceHistory)
